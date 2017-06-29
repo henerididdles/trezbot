@@ -5,7 +5,7 @@ from Initialize import joinRoom
 from Func import uptime
 
 try:
-	with open("data.dat", "r") as datafile:
+	with open("data\data.dat", "r") as datafile:
 		dat = parsedata(datafile)
 		if len(dat) == 0:
 			niceCount = 0
@@ -41,7 +41,7 @@ while True:
 				sendMessage(s, "Nice Count: " + str(niceCount))
 				# this is where I save over the current niceCount in data.dat
 				dat["niceCount"] = niceCount
-				with open("data.dat", "w+") as datafile:
+				with open("data\data.dat", "w+") as datafile:
 					for key in dat:
 						datafile.write(key + "=" + str(dat[key]))
 			elif message == "!uptime":
