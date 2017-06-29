@@ -5,7 +5,7 @@ from pprint import pprint
 from Settings import CHANNEL, CLIENT_ID
 
 def uptime(s, channel_id):
-	url = 'https://api.twitch.tv/kraken/streams/' + CLIENT_ID
+	url = 'https://api.twitch.tv/kraken/streams/' + channel_id
 	headers = {'Client-ID': CLIENT_ID, 'Accept': 'application/vnd.twitchtv.v5+json'}
 	r = requests.get(url, headers = headers).json()
 	#pprint(r)

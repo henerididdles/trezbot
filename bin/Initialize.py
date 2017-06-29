@@ -15,8 +15,8 @@ def joinRoom(s):
 	readbuffer = ""
 	Loading = True
 	while Loading:
-		readbuffer = readbuffer + s.recv(1024)
-		temp = string.split(readbuffer, "\n")
+		readbuffer = readbuffer + s.recv(1024).decode("UTF-8")
+		temp = readbuffer.split("\n")
 		readbuffer = temp.pop()
 		
 		for line in temp:
