@@ -34,7 +34,6 @@ while True:
 			ping(s)
 		else:
 			user, message = parseLine(s, line)
-			print(user, message)
 			if message == "quit":
 				quit()
 			elif "nice" in message.lower():
@@ -48,4 +47,4 @@ while True:
 			elif message == "!uptime":
 				sendMessage(s, uptime(s, channel_id))
 			elif message = "!help":
-				sendMessage(s, help(s))
+				pass

@@ -23,5 +23,6 @@ def uptime(s, channel_id):
 	
 	return "Stream has been live for " + uptime
 
+#todo
 def help(s):
 	return 'go here to see all the commands   _____'
