@@ -1,10 +1,8 @@
 import string
 import os
 from Read import parseLine, parsedata
-from Initialize import TwitchBot
-from Func import uptime
+from TwitchBot import TwitchBot
 from Settings import CHANNEL, NICK, HOST, PORT, PASS, CLIENT_ID
-
 
 try:
 	with open("../data/data.dat", "r") as datafile:
@@ -50,6 +48,6 @@ while True:
 					for key in dat:
 						datafile.write(key + "=" + str(dat[key]))
 			elif message == "!uptime":
-				tbot.sendMessage(uptime(tbot.s, tbot.channel_id))
+				tbot.uptime()
 			elif message == "!help":
-				pass
+				tbot.help()
