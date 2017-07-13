@@ -1,10 +1,8 @@
 import string
 import os
 from Read import parseLine, parsedata
-from Socket import openSocket, sendMessage, ping
-from Initialize import joinRoom
-from Func import uptime
-
+from TwitchBot import TwitchBot
+from Settings import CHANNEL, NICK, HOST, PORT, PASS, CLIENT_ID
 
 try:
 	with open("../data/data.dat", "r") as datafile:
@@ -21,29 +19,28 @@ except FileNotFoundError:
 		for key in dat:
 			datafile.write(key + "=" + str(dat[key]))
 
-s = openSocket()
-channel_id = joinRoom(s)
+tbot = TwitchBot(NICK, CLIENT_ID, PASS, CHANNEL)
 readbuffer = ""
 
 while True:
-	readbuffer = readbuffer + s.recv(1024).decode("UTF-8")
+	readbuffer = readbuffer + tbot.s.recv(1024).decode("UTF-8")
 	temp = readbuffer.split("\n")
 	readbuffer = temp.pop()
 	
 	for line in temp:
 		print(line)
 		if line == "PING :tmi.twitch.tv\r":
-			ping(s)
+			tbot.ping()
 		else:
-			user, message = parseLine(s, line)
+			user, message = parseLine(tbot.s, line)
 			if message == "quit":
 				quit()
 			elif "nice" in message.lower():
 				niceCount += 1
 				if niceCount % 100 == 0:
-					sendMessage(s, "Nice Count: " + str(niceCount) + " PogChamp")
+					tbot.sendMessage("Nice Count: " + str(niceCount) + " PogChamp")
 				else:
-					sendMessage(s, "Nice Count: " + str(niceCount))
+					tbot.sendMessage("Nice Count: " + str(niceCount))
 					
 				# this is where I save over the current niceCount in data.dat
 				dat["niceCount"] = niceCount
@@ -51,6 +48,6 @@ while True:
 					for key in dat:
 						datafile.write(key + "=" + str(dat[key]))
 			elif message == "!uptime":
-				sendMessage(s, uptime(s, channel_id))
+				tbot.uptime()
 			elif message == "!help":
-				pass
+				tbot.help()
