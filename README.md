@@ -7,7 +7,6 @@ Currently Implemented:
 
  
 Todo:
- - Turn initialize into class
  - add !help with link to this page I suppose
 
 Planned Functionality:
