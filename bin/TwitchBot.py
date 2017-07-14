@@ -1,4 +1,5 @@
 import string
+import os
 import requests
 import socket
 import json
@@ -54,6 +55,14 @@ class TwitchBot(object):
 		print("PONG")
 		
 	#Here goes implemented commands
+	def niceCounter(self, count):
+		count += 1
+		if count % 100 == 0:
+			self.sendMessage("Nice Count: " + str(count) + " PogChamp")
+		else:
+			self.sendMessage("Nice Count: " + str(count))
+		return count
+		
 	def uptime(self):
 		url = 'https://api.twitch.tv/kraken/streams/' + self.channel_id
 		headers = {'Client-ID': self.client_id, 'Accept': 'application/vnd.twitchtv.v5+json'}

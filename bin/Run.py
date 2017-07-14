@@ -7,17 +7,12 @@ from Settings import CHANNEL, NICK, HOST, PORT, PASS, CLIENT_ID
 try:
 	with open("../data/data.dat", "r") as datafile:
 		dat = parsedata(datafile)
-		if len(dat) == 0:
-			niceCount = 0
-		else:
-			niceCount = dat['niceCount']
+	if len(dat) == 0:
+		dat["niceCount"] = 0
 except FileNotFoundError:
 	dat = {}
-	niceCount = 0
-	dat["niceCount"] = niceCount
-	with open("../data/data.dat", "w+") as datafile:
-		for key in dat:
-			datafile.write(key + "=" + str(dat[key]))
+	dat["niceCount"] = 0
+	f = open("../data/data.dat", "w+")
 
 tbot = TwitchBot(NICK, CLIENT_ID, PASS, CHANNEL)
 readbuffer = ""
@@ -34,19 +29,13 @@ while True:
 		else:
 			user, message = parseLine(tbot.s, line)
 			if message == "quit":
-				quit()
-			elif "nice" in message.lower():
-				niceCount += 1
-				if niceCount % 100 == 0:
-					tbot.sendMessage("Nice Count: " + str(niceCount) + " PogChamp")
-				else:
-					tbot.sendMessage("Nice Count: " + str(niceCount))
-					
-				# this is where I save over the current niceCount in data.dat
-				dat["niceCount"] = niceCount
+				tbot.sendMessage("Quitting")
 				with open("../data/data.dat", "w+") as datafile:
 					for key in dat:
 						datafile.write(key + "=" + str(dat[key]))
+				quit()
+			elif "nice" in message.lower():
+				dat["niceCount"] = tbot.niceCounter(dat["niceCount"])
 			elif message == "!uptime":
 				tbot.uptime()
 			elif message == "!help":
