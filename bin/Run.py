@@ -1,5 +1,7 @@
 import string
 import os
+import re
+import shlex
 from Read import parseLine, parsedata
 from TwitchBot import TwitchBot
 from Settings import CHANNEL, NICK, HOST, PORT, PASS, CLIENT_ID
@@ -40,3 +42,6 @@ while True:
 				tbot.uptime()
 			elif message == "!help":
 				tbot.help()
+			elif re.match(r'^!modmenu.*', message, re.S):
+				args = shlex.split(message)
+				tbot.modMenu(args[1:])

@@ -5,7 +5,7 @@ import socket
 import json
 import datetime
 from pprint import pprint
-from Settings import HOST, PORT
+from Settings import HOST, PORT, CHANNEL_EDITOR
 #todo: put the functions into this too
 
 class TwitchBot(object):
@@ -85,3 +85,25 @@ class TwitchBot(object):
 	#todo
 	def help(self):
 		self.sendMessage('go here to see all the commands   _____')
+	
+	def modMenu(self, args):
+		if args[0] == 'title':
+			self.changeTitle(args[1])
+		elif args[0] == 'game':
+			self.changeGame(args[1])
+		else:
+			self.sendMessage('Improper Usage. Please use the form !modmenu <command> <arguments>')
+
+	def changeTitle(self, title):
+		url = 'https://api.twitch.tv/kraken/channels/' + self.channel_id
+		headers = {'Client-ID': self.client_id, 'Accept': 'application/vnd.twitchtv.v5+json',\
+		'Authorization': 'OAuth ' + CHANNEL_EDITOR, 'Content-Type': 'application/json'}
+		data = {}
+		data['channel'] = {'status': title}
+		json_data = json.dumps(data)
+		print(json_data)
+		r = requests.put(url, headers = headers, data = json_data)
+		pprint(r)
+	
+	def changeGame(self, game):
+		pass
