@@ -43,3 +43,4 @@ Temporary Items
 .apdisk
 *.pyc
 data/data.dat
+bin/Settings.py
